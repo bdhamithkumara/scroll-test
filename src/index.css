@@ -1,0 +1,314 @@
+.mainWindow {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  overflow: hidden;
+  color: white;
+  
+}
+
+
+
+.centered {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.centered2 {
+  position: absolute;
+  bottom: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+
+
+
+.centered-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff; /* Adjust the color as needed */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.centered-button:hover {
+  background-color: #0056b3; /* Adjust the hover color as needed */
+}
+
+
+#app {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+arc-text {
+  --text-color: white;
+  --bg-color: #111;
+  --font-size: 120px;
+  --radius: 6; /* approx ems */
+  --fade-opacity: 1;
+  --perspective: calc(var(--font-size) * 7);
+  --overlay-opacity: 100%;
+  --overlay-spread: 20%;
+  --backface-opacity: 10%;
+  --animation-name: none;
+  --animation-duration: 120s;
+  --perspective-origin-y: 150%;
+  --perspective-origin-x: 50%;
+  --rotation: 0deg;
+
+  font-weight: 800;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  color: var(--text-color);
+  font-size: var(--font-size);
+}
+
+arc-text .char {
+  display: inline-block;
+  position: absolute;
+  margin: auto;
+  top: 0;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+arc-text .outer-rotate {
+  height: 100%;
+  transform-style: preserve-3d;
+  width: 0;
+  position: relative;
+  overflow: visible;
+  margin: auto;
+}
+
+arc-text .outer-rotate.ready {
+  transform: translateZ(calc(var(--font-size) * var(--radius) * -1));
+}
+
+arc-text .char:empty::before {
+  content: " ";
+  min-width: 0.3em;
+  display: inline-block;
+}
+
+arc-text .stage {
+  perspective-origin: var(--perspective-origin-x) var(--perspective-origin-y);
+  perspective: var(--perspective);
+  height: calc(var(--font-size) * 1.5);
+  width: 100vw;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+@keyframes rotate {
+  from {
+    transform: translateZ(calc(var(--font-size) * var(--radius) * -1))
+      rotateY(0);
+  }
+  to {
+    transform: translateZ(calc(var(--font-size) * var(--radius) * -1))
+      rotateY(-360deg);
+  }
+}
+
+arc-text .text-row {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 0;
+  overflow: visible;
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  transform-style: preserve-3d;
+}
+
+.scroller {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  scroll-snap-type: y mandatory;
+  overflow: auto;
+  scroll-timeline: --scroll block;
+}
+
+.scroller .item {
+  scroll-snap-align: start;
+  height: 100vh;
+}
+
+.text {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  animation-name: offsetAnimation;
+  animation-duration: 1ms; /* Firefox requires this to apply the animation */
+  animation-direction: alternate;
+  animation-timeline: --scroll;
+  animation-timing-function: linear;
+}
+
+.scroller {
+  animation-name: colorAnimation;
+  animation-duration: 1ms; /* Firefox requires this to apply the animation */
+  animation-direction: alternate;
+  animation-timeline: --scroll;
+  animation-timing-function: linear;
+}
+
+arc-text .outer-rotate.ready {
+  animation-name: rotateAnimation1;
+  animation-duration: 1ms; /* Firefox requires this to apply the animation */
+  animation-direction: alternate;
+  animation-timeline: --scroll;
+  animation-timing-function: linear;
+}
+
+arc-text:nth-child(2) .outer-rotate.ready {
+  animation-name: rotateAnimation2;
+}
+
+arc-text:nth-child(3) .outer-rotate.ready {
+  animation-name: rotateAnimation3;
+}
+
+arc-text .stage {
+  animation-name: fadeAnimation1;
+  animation-duration: 1ms; /* Firefox requires this to apply the animation */
+  animation-direction: alternate;
+  animation-timeline: --scroll;
+  animation-timing-function: linear;
+}
+
+arc-text:nth-child(2) .stage {
+  animation-name: fadeAnimation2;
+}
+
+arc-text:nth-child(3) .stage {
+  animation-name: fadeAnimation3;
+}
+
+@keyframes colorAnimation {
+  0% {
+    color: #6ae0d0;
+    background-color: #18382c;
+  }
+  50% {
+    color: #fe586b;
+    background-color: #602340;
+  }
+  100% {
+    color: #d9a8ff;
+    background-color: #2a2563;
+  }
+}
+
+@keyframes offsetAnimation {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(200%);
+  }
+}
+
+@keyframes fadeAnimation1 {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeAnimation2 {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeAnimation3 {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes rotateAnimation1 {
+  0% {
+    transform: translateZ(calc(var(--font-size) * var(--radius) * -1))
+      rotateY(0);
+  }
+  50% {
+    transform: translateZ(calc(var(--font-size) * var(--radius) * -1))
+      rotateY(-120deg);
+  }
+  100% {
+    transform: translateZ(calc(var(--font-size) * var(--radius) * -1))
+      rotateY(-120deg);
+  }
+}
+
+@keyframes rotateAnimation2 {
+  0% {
+    transform: translateZ(calc(var(--font-size) * var(--radius) * -1))
+      rotateY(120deg);
+  }
+  50% {
+    transform: translateZ(calc(var(--font-size) * var(--radius) * -1))
+      rotateY(0);
+  }
+  100% {
+    transform: translateZ(calc(var(--font-size) * var(--radius) * -1))
+      rotateY(-120deg);
+  }
+}
+
+@keyframes rotateAnimation3 {
+  0% {
+    transform: translateZ(calc(var(--font-size) * var(--radius) * -1))
+      rotateY(120deg);
+  }
+  50% {
+    transform: translateZ(calc(var(--font-size) * var(--radius) * -1))
+      rotateY(120deg);
+  }
+  100% {
+    transform: translateZ(calc(var(--font-size) * var(--radius) * -1))
+      rotateY(0);
+  }
+}
